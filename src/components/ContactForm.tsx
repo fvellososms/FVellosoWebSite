@@ -1,15 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { ArrowRightIcon, CheckIcon } from "@/components/icons";
-import { formatPhone, validateLead, type LeadErrors } from "@/lib/leads";
-
-type Props = {
-  variant?: "compact" | "full";
-  source: "home" | "orcamento";
-  serviceOptions: string[];
-  defaultService?: string;
-};
+import { ArrowRightIcon, CheckIcon } from "./icons";
 
 const emptyForm = {
   name: "",
@@ -18,8 +10,30 @@ const emptyForm = {
   phone: "",
   service: "",
   message: "",
-  website: "",
+  website: "", // honeypot
 };
+
+type Props = {
+  variant?: "compact" | "full";
+  source: string;
+  serviceOptions: string[];
+  defaultService?: string;
+};
+
+// Formata telefone conforme usuário digita
+function formatPhone(value: string) {
+  const v = value.replace(/\D/g, "").slice(0, 11);
+  if (v.length >= 11) {
+    return `(${v.slice(0, 2)}) ${v.slice(2, 7)}-${v.slice(7)}`;
+  }
+  if (v.length >= 7) {
+    return `(${v.slice(0, 2)}) ${v.slice(2, 6)}-${v.slice(6)}`;
+  }
+  if (v.length >= 3) {
+    return `(${v.slice(0, 2)}) ${v.slice(2)}`;
+  }
+  return v;
+}
 
 export default function ContactForm({
   variant = "compact",
@@ -32,7 +46,7 @@ export default function ContactForm({
     ...emptyForm,
     service: defaultService,
   });
-  const [errors, setErrors] = useState<LeadErrors>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">(
     "idle",
   );
@@ -40,17 +54,27 @@ export default function ContactForm({
 
   const update = (field: keyof typeof emptyForm, value: string) => {
     setValues((prev) => ({ ...prev, [field]: value }));
-    setErrors((prev) => ({ ...prev, [field]: undefined }));
+    setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function validate() {
+    const newErrors: Record<string, string> = {};
+    if (!values.name.trim()) newErrors.name = "Nome é obrigatório";
+    if (!values.email.trim() || !values.email.includes("@"))
+      newErrors.email = "E-mail inválido";
+    if (values.phone.replace(/\D/g, "").length < 10)
+      newErrors.phone = "Telefone inválido";
+    if (full && !values.service) newErrors.service = "Selecione um serviço";
+    if (!values.message.trim()) newErrors.message = "Mensagem é obrigatória";
+    return newErrors;
+  }
+
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    // RF09 — validação dos campos obrigatórios antes do envio.
-    const localErrors = validateLead(
-      { ...values, source },
-      { requireService: full },
-    );
+    if (values.website) return; // honeypot
+
+    const localErrors = validate();
     if (Object.keys(localErrors).length > 0) {
       setErrors(localErrors);
       setStatus("error");
@@ -61,34 +85,26 @@ export default function ContactForm({
     setStatus("loading");
     setFeedback("");
 
-    try {
-      const response = await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, source }),
-      });
-      const data = (await response.json()) as {
-        ok: boolean;
-        message?: string;
-        errors?: LeadErrors;
-      };
+    // Constrói a mensagem para o WhatsApp
+    const text = `*Nova solicitação via site*
+*Nome:* ${values.name}
+*Empresa:* ${values.company || "Não informado"}
+*E-mail:* ${values.email}
+*Telefone:* ${values.phone}
+*Serviço:* ${values.service || "Não informado"}
+*Origem:* ${source}
 
-      if (!response.ok || !data.ok) {
-        setErrors(data.errors ?? {});
-        setStatus("error");
-        setFeedback(data.message ?? "Não foi possível enviar sua mensagem.");
-        return;
-      }
+*Mensagem:*
+${values.message}`;
 
-      setStatus("sent");
-      setFeedback(data.message ?? "Solicitação enviada com sucesso!");
-      setValues({ ...emptyForm, service: defaultService });
-    } catch {
-      setStatus("error");
-      setFeedback(
-        "Falha de conexão. Tente novamente ou fale conosco pelo WhatsApp.",
-      );
-    }
+    const whatsappNumber = "5521987646175"; // Número padrão
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+
+    window.open(whatsappUrl, "_blank");
+    
+    setStatus("sent");
+    setFeedback("Sua mensagem foi preparada! Envie-a pelo WhatsApp.");
+    setValues({ ...emptyForm, service: defaultService });
   }
 
   if (status === "sent") {
@@ -98,7 +114,7 @@ export default function ContactForm({
           <CheckIcon className="h-6 w-6" />
         </span>
         <div>
-          <h3 className="text-xl font-bold">Solicitação enviada!</h3>
+          <h3 className="text-xl font-bold">Quase lá!</h3>
           <p className="mt-2 text-sm leading-relaxed text-ink">{feedback}</p>
         </div>
         <button
@@ -229,16 +245,14 @@ export default function ContactForm({
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs leading-relaxed text-ink/70">
-          Seus dados são usados apenas para retorno comercial. Campos com * são
-          obrigatórios.
+          Você será redirecionado para o WhatsApp com a mensagem pronta.
         </p>
         <button
           type="submit"
           className="btn btn-primary w-full shrink-0 sm:w-auto"
-          disabled={status === "loading"}
         >
-          {status === "loading" ? "Enviando..." : full ? "Enviar solicitação" : "Enviar mensagem"}
-          {status === "loading" ? null : <ArrowRightIcon className="h-4 w-4" />}
+          {full ? "Enviar via WhatsApp" : "Chamar no WhatsApp"}
+          <ArrowRightIcon className="h-4 w-4" />
         </button>
       </div>
     </form>
