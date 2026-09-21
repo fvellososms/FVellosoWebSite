@@ -41,6 +41,16 @@ export default async function ServicosPage() {
     },
   ];
 
+  // Mapeamento dos slugs para as opções de serviço correspondentes no formulário de orçamento
+  const serviceOptionMap: Record<string, string> = {
+    "consultoria-sms": "Consultoria em SMS",
+    "treinamentos-nr": "Treinamentos NR 06 / 08 / 18",
+    "pgr-pcmso": "Elaboração de PGR",
+    "fiscalizacao-sms": "Fiscalização SMS em obra",
+    "guia-seguranca": "Guia Completo de Segurança",
+    "solucoes-tecnologicas": "Soluções Tecnológicas",
+  };
+
   // Unindo os serviços do CMS com os novos serviços fixos
   const allServices = [...services, ...extraServices];
 
@@ -67,6 +77,7 @@ export default async function ServicosPage() {
             {allServices.map((service, index) => {
               // Se não encontrar um ícone específico no objeto serviceIcons, usa o ShieldIcon como fallback (ideal para os novos)
               const Icon = serviceIcons[service.slug as keyof typeof serviceIcons] ?? ShieldIcon;
+              const targetOption = serviceOptionMap[service.slug] ?? service.title;
               
               return (
                 <Reveal
@@ -109,7 +120,10 @@ export default async function ServicosPage() {
                         ))}
                       </ul>
                       <div className="mt-auto pt-6 border-t border-brand-50">
-                        <Link href="/orcamento" className="inline-flex items-center gap-2 text-sm font-bold text-brand-600 hover:text-brand-700 transition">
+                        <Link 
+                          href={`/orcamento?servico=${encodeURIComponent(targetOption)}`} 
+                          className="inline-flex items-center gap-2 text-sm font-bold text-brand-600 hover:text-brand-700 transition"
+                        >
                           Solicitar orçamento para este serviço
                           <ArrowRightIcon className="h-4 w-4" />
                         </Link>

@@ -104,14 +104,7 @@ export const defaultContent: SiteContent = {
     badges: [
       "NR 05 · CIPA",
       "NR 06 · EPI",
-      "NR 10 · Eletricidade",
-      "NR 11 · Transporte e Movimentação",
-      "NR 12 · Máquinas e Equipamentos",
-      "NR 16 · Atividades Perigosas",
       "NR 18 · Construção",
-      "NR 23 · Proteção Contra Incêndio",
-      "NR 33 · Espaços Confinados",
-      "NR 35 · Trabalho em Altura",
       "PGR & PCMSO",
     ],
   },
@@ -161,7 +154,7 @@ export const defaultContent: SiteContent = {
     },
     {
       slug: "treinamentos-nr",
-      title: "Treinamentos NR 06 · 08 · 18",
+      title: "Treinamentos",
       short:
         "Capacitação prática e certificada das equipes, com conteúdo aderente à realidade de cada frente de serviço.",
       description:
@@ -298,6 +291,8 @@ export const serviceOptions = [
   "Elaboração de PGR",
   "Elaboração de PCMSO",
   "Fiscalização SMS em obra",
+  "Guia Completo de Segurança",
+  "Soluções Tecnológicas",
   "Outro assunto",
 ];
 
