@@ -6,7 +6,7 @@ export default function EquipamentosProtecaoPage() {
   return (
     <>
       {/* 1. HERO */}
-      <section className="relative overflow-hidden bg-navy-deep py-16 text-white lg:py-24">
+      <section className="relative flex min-h-[50vh] items-center overflow-hidden bg-navy-deep py-16 text-white lg:py-24">
         <div className="grid-pattern absolute inset-0 opacity-30" />
         <div className="container-fv relative">
           <Reveal className="mx-auto max-w-3xl text-center">

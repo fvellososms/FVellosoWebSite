@@ -80,11 +80,11 @@ const img = (id: number, w = 1200, h = 800) =>
 
 export const defaultContent: SiteContent = {
   instagramPosts: [
-    "https://www.instagram.com/fvelloso.sms/p/Dc13UUKke1h/",
-    "https://www.instagram.com/fvelloso.sms/reel/Db3A_78R2hd/",
-    "https://www.instagram.com/fvelloso.sms/reel/DbdWvCBRUsW/",
-    "https://www.instagram.com/fvelloso.sms/p/DaoRaFAD8_E/",
-    "https://www.instagram.com/fvelloso.sms/reel/Da0sIoZx1z5/",
+    "https://www.instagram.com/p/Dc13UUKke1h/",
+    "https://www.instagram.com/reel/Db3A_78R2hd/",
+    "https://www.instagram.com/reel/DbdWvCBRUsW/",
+    "https://www.instagram.com/p/DaoRaFAD8_E/",
+    "https://www.instagram.com/reel/Da0sIoZx1z5/",
   ],
   company: {
     name: "FVelloso",

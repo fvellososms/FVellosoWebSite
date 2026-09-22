@@ -1,6 +1,17 @@
 // Lista mestra das NRs que a FVelloso oferece serviço comercial direto
 export const nrsWithServices = ["05", "06", "08", "10", "11", "12", "16", "18", "23", "33", "35"];
 
+export type TrainingRequirement = {
+  nome: string;
+  publico?: string;
+  funcao?: string;
+  cargaInicial?: string;
+  cargaPeriodica?: string;
+  periodicidade?: string;
+  modalidade?: string;
+  observacao?: string;
+};
+
 export type NRDetails = {
   id: string;
   number: string;
@@ -10,6 +21,19 @@ export type NRDetails = {
   detailedContent: string[];
   imageUrl: string;
   servicePitch?: string;
+  
+  // Antigos, agora opcionais
+  cargaHoraria?: string;
+  periodicidade?: string;
+
+  // Novos campos
+  possuiTreinamentoObrigatorio?: boolean;
+  treinamentos?: TrainingRequirement[];
+  documentosRelacionados?: string[];
+  responsabilidades?: string[];
+  riscosRelacionados?: string[];
+  ultimaAtualizacao?: string;
+  fonteOficial?: string;
 };
 
 // Função auxiliar para gerar as imagens padronizadas do Pexels
@@ -24,10 +48,15 @@ export const nrsDatabase: NRDetails[] = [
     shortDescription: "Estabelece as disposições gerais, campo de aplicação, termos e definições comuns a todas as NRs. Introduz o PGR.",
     detailedContent: [
       "A NR 01 é a espinha dorsal de toda a legislação de Segurança e Saúde no Trabalho no Brasil. Ela define os termos, as responsabilidades do empregador e do empregado, e as diretrizes gerais que devem ser aplicadas em conjunto com as demais normas.",
-      "O grande destaque desta norma é a obrigatoriedade do Gerenciamento de Riscos Ocupacionais (GRO) e a implementação do Programa de Gerenciamento de Riscos (PGR). Todas as empresas, com raras exceções, devem elaborar o PGR para mapear os riscos de suas operações e definir planos de ação claros.",
+      "O GRO deve abranger os perigos e riscos ocupacionais identificados nos processos de trabalho, incluindo, quando aplicáveis, fatores físicos, químicos, biológicos, ergonômicos, de acidentes e fatores de risco psicossociais relacionados ao trabalho. Todas as empresas, com exceções previstas, devem elaborar o PGR para mapear os riscos e definir planos de ação.",
       "As informações geradas no PGR são a base fundamental para a elaboração do PCMSO (saúde ocupacional) e para o envio correto dos eventos de SST ao eSocial."
     ],
     imageUrl: getImg(8961146),
+    cargaHoraria: "Conforme capacitação aplicável",
+    periodicidade: "Conforme NR aplicável e situações previstas na NR-01",
+    ultimaAtualizacao: "2026",
+    fonteOficial: "Ministério do Trabalho e Emprego",
+    possuiTreinamentoObrigatorio: true,
   },
   {
     id: "nr-03",
@@ -41,6 +70,8 @@ export const nrsDatabase: NRDetails[] = [
       "Durante o período de paralisação, os trabalhadores devem continuar recebendo seus salários normalmente, e a liberação do local só ocorre após a regularização completa das não conformidades apontadas pela fiscalização."
     ],
     imageUrl: getImg(8960942),
+    cargaHoraria: "Não aplicável",
+    periodicidade: "Conforme fiscalização",
   },
   {
     id: "nr-04",
@@ -49,11 +80,13 @@ export const nrsDatabase: NRDetails[] = [
     category: "Organização",
     shortDescription: "Define o dimensionamento e atuação dos profissionais de saúde e segurança dentro das empresas.",
     detailedContent: [
-      "A NR 04 estabelece a obrigatoriedade de as empresas manterem Serviços Especializados em Engenharia de Segurança e em Medicina do Trabalho (SESMT), com a finalidade de promover a saúde e proteger a integridade do trabalhador no local de trabalho.",
+      "A NR-04 estabelece os critérios para constituição e dimensionamento dos Serviços Especializados em Segurança e em Medicina do Trabalho (SESMT), considerando fatores como o grau de risco da atividade econômica e o número de trabalhadores da organização. com a finalidade de promover a saúde e proteger a integridade do trabalhador no local de trabalho.",
       "O dimensionamento do SESMT depende diretamente do Grau de Risco (GR) da atividade principal da empresa e do número total de empregados. A equipe pode ser composta por Médico do Trabalho, Engenheiro de Segurança do Trabalho, Técnico de Segurança do Trabalho, Enfermeiro e Auxiliar/Técnico de Enfermagem do Trabalho.",
       "O SESMT é responsável por aplicar o conhecimento de engenharia e medicina ao ambiente de trabalho, mitigando os riscos na fonte e garantindo que todas as demais NRs sejam cumpridas rigorosamente."
     ],
     imageUrl: getImg(8961146),
+    cargaHoraria: "Não aplicável",
+    periodicidade: "Contínua",
   },
   {
     id: "nr-05",
@@ -67,6 +100,16 @@ export const nrsDatabase: NRDetails[] = [
       "Recentemente, a norma passou a exigir que a CIPA também inclua em suas atividades o combate ao assédio sexual e a outras formas de violência no ambiente de trabalho, estabelecendo procedimentos para recebimento e acompanhamento de denúncias."
     ],
     imageUrl: getImg(35082108),
+    possuiTreinamentoObrigatorio: true,
+    treinamentos: [
+      {
+        nome: "Treinamento para Membros da CIPA",
+        cargaInicial: "8h, 12h, 16h ou 20h (conforme o grau de risco da organização)",
+        cargaPeriodica: "Conforme grau de risco",
+        periodicidade: "Anual",
+        modalidade: "Pode ser EaD, semipresencial ou presencial, conforme regras específicas",
+      }
+    ],
     servicePitch: "A FVelloso conduz todo o processo eleitoral da sua CIPA (do edital à posse), elabora a documentação obrigatória e ministra o treinamento exigido por lei para os cipeiros, inclusive com os novos módulos de combate ao assédio."
   },
   {
@@ -81,6 +124,9 @@ export const nrsDatabase: NRDetails[] = [
       "A norma também exige que o empregador oriente e treine o trabalhador sobre o uso, guarda e conservação do EPI, além de registrar o seu fornecimento em fichas (físicas ou eletrônicas) que servem como prova fundamental em auditorias e processos trabalhistas."
     ],
     imageUrl: getImg(30592246),
+    cargaHoraria: "Definida conforme os EPIs e riscos da atividade",
+    periodicidade: "Na admissão, alteração de EPI/riscos e quando necessário",
+    possuiTreinamentoObrigatorio: true,
     servicePitch: "Não basta comprar o EPI. Nossa equipe estrutura a gestão completa: especificação do Certificado de Aprovação (CA) correto para cada risco, implantação de fichas de controle (físicas ou biométricas) e treinamentos práticos de uso e conservação."
   },
   {
@@ -95,6 +141,8 @@ export const nrsDatabase: NRDetails[] = [
       "O documento resultante dessas avaliações é o Atestado de Saúde Ocupacional (ASO), indispensável para a validação da aptidão do funcionário para exercer suas atividades específicas."
     ],
     imageUrl: getImg(7088834),
+    cargaHoraria: "Não aplicável",
+    periodicidade: "Anual (Exames/PCMSO)",
   },
   {
     id: "nr-08",
@@ -108,6 +156,8 @@ export const nrsDatabase: NRDetails[] = [
       "Também estabelece a necessidade de proteção adequada contra intempéries (chuva, sol excessivo) em locais abertos ou parcialmente abertos que façam parte das instalações da empresa."
     ],
     imageUrl: getImg(8961260),
+    cargaHoraria: "Não aplicável",
+    periodicidade: "Contínua",
     servicePitch: "Realizamos vistorias técnicas completas nas suas instalações para garantir que pisos, paredes, coberturas e circulações atendam às normas de segurança, elaborando laudos e planos de ação para adequação estrutural.",
   },
   {
@@ -122,6 +172,8 @@ export const nrsDatabase: NRDetails[] = [
       "A norma exige que as avaliações quantitativas (medições em campo) sejam realizadas para comprovar o controle da exposição ou dimensionar o nível do risco, sendo os resultados incorporados ao inventário de riscos do PGR."
     ],
     imageUrl: getImg(19544248),
+    cargaHoraria: "Não aplicável",
+    periodicidade: "Anual (Avaliações)",
   },
   {
     id: "nr-10",
@@ -135,6 +187,8 @@ export const nrsDatabase: NRDetails[] = [
       "A norma também exige treinamento específico (Básico e Complementar - SEP) para os profissionais do setor, além de ditar procedimentos estritos para o processo de desenergização e a obrigatoriedade do uso de EPIs dielétricos e vestimentas anti-chama."
     ],
     imageUrl: getImg(8961146),
+    cargaHoraria: "40h (Básico) / 40h (SEP)",
+    periodicidade: "Bienal (2 anos)",
     servicePitch: "Elaboramos e atualizamos o Prontuário de Instalações Elétricas (PIE), emitimos laudos de SPDA (para-raios) e aterramento, além de ministrar os treinamentos obrigatórios de NR 10 Básico e SEP para seus eletricistas.",
   },
   {
@@ -149,6 +203,9 @@ export const nrsDatabase: NRDetails[] = [
       "Também estabelece rigorosos critérios para o armazenamento de materiais, ditando a forma de empilhamento, respeitando a capacidade de carga do piso e as distâncias mínimas de segurança em relação às estruturas e paredes da edificação."
     ],
     imageUrl: getImg(8961260),
+    cargaHoraria: "Conforme equipamento e atividade",
+    periodicidade: "Conforme capacitação, função, equipamento e requisitos aplicáveis",
+    possuiTreinamentoObrigatorio: true,
     servicePitch: "Ministramos treinamentos de capacitação e reciclagem para operadores de empilhadeiras, pontes rolantes, talhas e guindastes, além de estruturar os checklists diários de inspeção para o maquinário.",
   },
   {
@@ -163,6 +220,8 @@ export const nrsDatabase: NRDetails[] = [
       "As empresas precisam realizar uma Apreciação de Risco (inventário detalhado) de todas as suas máquinas, adequar os painéis elétricos aos padrões da NR 10, e criar manuais e procedimentos de trabalho seguro para a operação e manutenção de cada equipamento."
     ],
     imageUrl: getImg(19544248),
+    cargaHoraria: "8h a 40h",
+    periodicidade: "Admissional / Conforme alteração",
     servicePitch: "Executamos a Apreciação de Risco completa do seu parque fabril. Nossos engenheiros elaboram laudos técnicos de adequação, manuais de operação segura e procedimentos de bloqueio e etiquetagem (LOTO)."
   },
   {
@@ -177,6 +236,8 @@ export const nrsDatabase: NRDetails[] = [
       "As empresas devem manter um prontuário rigoroso (Livro de Registro de Segurança) para cada equipamento, contendo relatórios de testes hidrostáticos, ultrassom, calibração de válvulas de segurança e o controle dos treinamentos exigidos para os operadores de caldeira."
     ],
     imageUrl: getImg(8960942),
+    cargaHoraria: "40h (Operadores)",
+    periodicidade: "Anual a Trienal",
   },
   {
     id: "nr-14",
@@ -190,6 +251,8 @@ export const nrsDatabase: NRDetails[] = [
       "Além da emissão de gases, a NR foca no isolamento térmico adequado das paredes estruturais dos fornos para prevenir queimaduras por contato e para controlar a carga de calor radiante no ambiente de trabalho."
     ],
     imageUrl: getImg(19544248),
+    cargaHoraria: "Variável",
+    periodicidade: "Periódico",
   },
   {
     id: "nr-15",
@@ -203,6 +266,8 @@ export const nrsDatabase: NRDetails[] = [
       "O fornecimento e uso correto de EPIs certificados, se comprovarem a neutralização ou redução da exposição do trabalhador para níveis abaixo do limite de tolerância, podem isentar a empresa do pagamento do adicional."
     ],
     imageUrl: getImg(7088834),
+    cargaHoraria: "Não aplicável",
+    periodicidade: "Conforme laudo (LTCAT)",
   },
   {
     id: "nr-16",
@@ -216,6 +281,8 @@ export const nrsDatabase: NRDetails[] = [
       "O laudo técnico assinado por profissional legalmente habilitado é o único documento válido para caracterizar as áreas de risco dentro das dependências da empresa e confirmar quais funções têm direito legal ao recebimento do adicional."
     ],
     imageUrl: getImg(8960942),
+    cargaHoraria: "Não aplicável",
+    periodicidade: "Conforme laudo de periculosidade",
     servicePitch: "Evite passivos trabalhistas. Emitimos o Laudo de Periculosidade assinado por Engenheiro de Segurança, caracterizando ou descaracterizando tecnicamente as áreas de risco (inflamáveis, elétricas, etc) da sua empresa."
   },
   {
@@ -226,10 +293,20 @@ export const nrsDatabase: NRDetails[] = [
     shortDescription: "Visa a estabelecer as adaptações das condições de trabalho às características psicofisiológicas dos trabalhadores.",
     detailedContent: [
       "A NR 17 tem o objetivo de proporcionar conforto, segurança e eficiência no trabalho, combatendo a fadiga física e mental através da adequação do trabalho ao homem (e não o contrário).",
-      "Um dos instrumentos mais cruciais da norma é a Análise Ergonômica do Trabalho (AET). Trata-se de um estudo aprofundado dos postos de trabalho para avaliar fatores como levantamento e transporte manual de pesos, mobiliário, equipamentos, condições ambientais (ruído, temperatura e iluminação) e a organização do trabalho (metas e jornadas).",
+      "A gestão ergonômica inicia-se pela Avaliação Ergonômica Preliminar (AEP), destinada a identificar situações que demandem adaptação às características psicofisiológicas dos trabalhadores. Quando forem identificadas situações que exijam aprofundamento, insuficiência das medidas existentes, indicações provenientes do PCMSO ou relação com acidentes e doenças, pode ser necessária a Análise Ergonômica do Trabalho (AET). Trata-se de um estudo aprofundado dos postos de trabalho para avaliar fatores como levantamento e transporte manual de pesos, mobiliário, equipamentos, condições ambientais (ruído, temperatura e iluminação) e a organização do trabalho (metas e jornadas).",
       "Para atividades de *telemarketing*, operadores de *checkout* (caixas de supermercado) e trabalhos que demandam manutenção prolongada da postura sentada ou em pé, a norma traz anexos com regras específicas e muito restritas sobre as dinâmicas de pausas e design dos móveis."
     ],
     imageUrl: getImg(8961146),
+    possuiTreinamentoObrigatorio: true,
+    treinamentos: [
+      {
+        nome: "Treinamento sobre Riscos Ergonômicos",
+        cargaInicial: "Variável",
+        cargaPeriodica: "Variável",
+        periodicidade: "Admissional e periódico",
+        observacao: "Os trabalhadores devem ser treinados quanto aos riscos ergonômicos da sua atividade e medidas de prevenção."
+      }
+    ],
   },
   {
     id: "nr-18",
@@ -243,6 +320,41 @@ export const nrsDatabase: NRDetails[] = [
       "A norma define padrões de proteção absoluta contra quedas (guarda-corpos, telas, redes), segurança no uso de andaimes (fachadeiros e suspensos), normas para escavações e as regras para o uso de gruas e elevadores de cremalheira."
     ],
     imageUrl: getImg(8961260),
+    possuiTreinamentoObrigatorio: true,
+    treinamentos: [
+      {
+        nome: "Básico de Segurança",
+        cargaInicial: "4h",
+        cargaPeriodica: "4h",
+        periodicidade: "2 anos",
+      },
+      {
+        nome: "Operador de Grua",
+        cargaInicial: "80h (sendo pelo menos 40h práticas)",
+        cargaPeriodica: "Conforme NR-18",
+        periodicidade: "Bienal",
+      },
+      {
+        nome: "Operador de Guindaste",
+        cargaInicial: "120h (sendo pelo menos 80h práticas)",
+      },
+      {
+        nome: "Sinaleiro / Amarrador de Cargas",
+        cargaInicial: "16h",
+      },
+      {
+        nome: "Operador de Elevador",
+        cargaInicial: "16h",
+        cargaPeriodica: "4h",
+        periodicidade: "Anual",
+      },
+      {
+        nome: "Operador de PEMT",
+        cargaInicial: "4h",
+        cargaPeriodica: "4h",
+        periodicidade: "2 anos",
+      }
+    ],
     servicePitch: "Nossa especialidade. Elaboramos o PGR do canteiro de obras, realizamos os treinamentos admissionais da equipe e alocamos técnicos para a fiscalização SMS diária ou periódica na sua frente de serviço."
   },
   {
@@ -257,6 +369,8 @@ export const nrsDatabase: NRDetails[] = [
       "Apenas trabalhadores devidamente qualificados (Blasters), treinados e com a ficha criminal limpa e autorização especial podem manusear e operar a detonação desses artefatos em pedreiras e frentes de desmonte."
     ],
     imageUrl: getImg(19544248),
+    cargaHoraria: "40h (Blaster)",
+    periodicidade: "Bienal (2 anos)",
   },
   {
     id: "nr-20",
@@ -270,6 +384,8 @@ export const nrsDatabase: NRDetails[] = [
       "A documentação exigida é vasta, contemplando o Prontuário da Instalação, projeto físico aprovado, planos de inspeção das tubulações, e a exigência mandatória de um Plano de Respostas a Emergências (PAE) testado por simulados regulares."
     ],
     imageUrl: getImg(19544248),
+    cargaHoraria: "8h a 32h",
+    periodicidade: "Anual / Trienal",
   },
   {
     id: "nr-21",
@@ -283,6 +399,8 @@ export const nrsDatabase: NRDetails[] = [
       "Por sua brevidade, as exigências da NR 21 geralmente se fundem às documentações e planos de ação da NR 18 e da NR 31."
     ],
     imageUrl: getImg(8961260),
+    cargaHoraria: "Não aplicável",
+    periodicidade: "Contínua",
   },
   {
     id: "nr-22",
@@ -292,10 +410,18 @@ export const nrsDatabase: NRDetails[] = [
     shortDescription: "Preceitos de segurança e saúde específicos para a atividade mineradora.",
     detailedContent: [
       "A NR 22 atua sobre minerações subterrâneas, a céu aberto, garimpos, extração de minerais industriais, beneficiamento e pesquisa mineral, estipulando preceitos de segurança severos diante dos riscos de soterramentos e intoxicações graves.",
-      "Um dos pontos principais da norma é a criação obrigatória do PGR específico para Mineração (PGRM), que atua integrado com as normas do Ministério de Minas e Energia. O plano deve prever suporte e estabilidade de maciços rochosos, plano de ventilação mecânica para galerias e controle rigoroso de poeiras (prevenção de silicose).",
+      "Um dos pontos principais da norma é a criação obrigatória do Programa de Gerenciamento de Riscos (PGR) da atividade de mineração, que atua integrado com as normas do Ministério de Minas e Energia. O plano deve prever suporte e estabilidade de maciços rochosos, plano de ventilação mecânica para galerias e controle rigoroso de poeiras (prevenção de silicose).",
       "As minas subterrâneas exigem sistemas de monitoramento contínuo de gases inflamáveis e tóxicos, a presença de uma Brigada de Emergência especializada em resgate em profundidade e um sistema robusto de comunicação e localização dos operários."
     ],
     imageUrl: getImg(8960942),
+    possuiTreinamentoObrigatorio: true,
+    treinamentos: [
+      {
+        nome: "Integração para Mineração",
+        cargaInicial: "24h",
+        periodicidade: "Anual"
+      }
+    ],
   },
   {
     id: "nr-23",
@@ -309,6 +435,9 @@ export const nrsDatabase: NRDetails[] = [
       "A empresa também é obrigada a providenciar para todos os trabalhadores informações claras sobre a utilização dos equipamentos de combate a incêndio (extintores e hidrantes), procedimentos para evacuação rápida dos locais de trabalho e dispositivos de alarme existentes."
     ],
     imageUrl: getImg(35082108),
+    cargaHoraria: "Conforme legislação estadual e normas técnicas aplicáveis",
+    periodicidade: "Conforme legislação estadual e normas técnicas aplicáveis",
+    possuiTreinamentoObrigatorio: true,
     servicePitch: "Formamos e treinamos a sua Brigada de Incêndio (teoria e prática), elaboramos Planos de Atendimento a Emergências (PAE) e rotas de fuga em conformidade com as exigências do Corpo de Bombeiros."
   },
   {
@@ -323,6 +452,8 @@ export const nrsDatabase: NRDetails[] = [
       "Para trabalhadores em trânsito ou obras distantes, a norma estipula regras rígidas para a construção de alojamentos, determinando áreas mínimas de ventilação, o dimensionamento de camas e armários e a rotina de limpeza do local."
     ],
     imageUrl: getImg(8961260),
+    cargaHoraria: "Não aplicável",
+    periodicidade: "Contínua",
   },
   {
     id: "nr-25",
@@ -336,6 +467,8 @@ export const nrsDatabase: NRDetails[] = [
       "A gestão exigida pela NR 25 dialoga intimamente com a Política Nacional de Resíduos Sólidos e as certificações de Sistema de Gestão Ambiental (ISO 14001)."
     ],
     imageUrl: getImg(19544248),
+    cargaHoraria: "Não aplicável",
+    periodicidade: "Conforme descarte",
   },
   {
     id: "nr-26",
@@ -346,9 +479,16 @@ export const nrsDatabase: NRDetails[] = [
     detailedContent: [
       "A NR 26 define a obrigatoriedade da adoção de cores específicas para segurança em estabelecimentos ou locais de trabalho, a fim de indicar e advertir acerca dos perigos (tubulações, portas de emergência, painéis elétricos).",
       "Além da pintura e de placas, a norma é fortemente pautada na classificação e rotulagem preventiva dos produtos químicos segundo o GHS (Sistema Globalmente Harmonizado de Classificação e Rotulagem de Produtos Químicos).",
-      "É mandatório que todo produto químico perigoso presente na empresa esteja corretamente rotulado em português e acompanhado da FISPQ (Ficha de Informação de Segurança de Produtos Químicos), documento que deve ser de livre acesso para todos os trabalhadores do setor."
+      "É mandatório que todo produto químico perigoso presente na empresa esteja corretamente rotulado em português e acompanhado da Ficha com Dados de Segurança (FDS, anteriormente conhecida como FISPQ), documento que deve ser de livre acesso para todos os trabalhadores do setor."
     ],
     imageUrl: getImg(8960942),
+    possuiTreinamentoObrigatorio: true,
+    treinamentos: [
+      {
+        nome: "Treinamento sobre Riscos Químicos e FDS",
+        observacao: "Trabalhadores devem ter acesso às fichas e receber treinamento sobre os perigos e medidas de segurança."
+      }
+    ],
   },
   {
     id: "nr-28",
@@ -362,6 +502,8 @@ export const nrsDatabase: NRDetails[] = [
       "O cálculo do valor da multa a ser cobrado da empresa utiliza uma fórmula que cruza a gravidade da infração com a quantidade de empregados registrados sob o CNPJ da empresa infratora."
     ],
     imageUrl: getImg(8961146),
+    cargaHoraria: "Não aplicável",
+    periodicidade: "Fiscalizatória",
   },
   {
     id: "nr-29",
@@ -375,6 +517,8 @@ export const nrsDatabase: NRDetails[] = [
       "A norma impõe cuidados operacionais gigantescos com guindastes de cais (portêineres), movimentação de contêineres e a segregação absoluta no manuseio e armazenagem de produtos perigosos dentro do porto."
     ],
     imageUrl: getImg(8960942),
+    cargaHoraria: "24h (Treinamento)",
+    periodicidade: "Bienal (2 anos)",
   },
   {
     id: "nr-30",
@@ -388,6 +532,8 @@ export const nrsDatabase: NRDetails[] = [
       "A norma dispõe regras sobre o resgate em caso de queda de homens ao mar, limites nutricionais para o abastecimento do navio, e o suporte de telemedicina em embarcações que não possuem enfermaria com médico embarcado."
     ],
     imageUrl: getImg(19544248),
+    cargaHoraria: "20h",
+    periodicidade: "Bienal (2 anos)",
   },
   {
     id: "nr-31",
@@ -401,6 +547,8 @@ export const nrsDatabase: NRDetails[] = [
       "Também exige alojamentos descentes para trabalhadores sazonais (como nas épocas de colheita), áreas de vivência seguras contra picadas de cobras e insetos, além de garantir transporte seguro, sendo proibido o uso de caminhões abertos ('paus de arara') e veículos sem cinto de segurança para deslocamento da equipe rural."
     ],
     imageUrl: getImg(8961260),
+    cargaHoraria: "8h a 24h",
+    periodicidade: "Anual / Bienal",
   },
   {
     id: "nr-32",
@@ -414,6 +562,8 @@ export const nrsDatabase: NRDetails[] = [
       "Para evitar perfurações acidentais e contaminação por HIV/Hepatites, a norma determina o uso obrigatório de agulhas com dispositivos de segurança, o descarte apropriado em caixas rígidas para perfurocortantes (Descarpack) e proíbe terminantemente o reencape manual de agulhas."
     ],
     imageUrl: getImg(7088834),
+    cargaHoraria: "4h a 16h",
+    periodicidade: "Admissional / Anual",
   },
   {
     id: "nr-33",
@@ -427,6 +577,36 @@ export const nrsDatabase: NRDetails[] = [
       "A operação exige um trabalhador capacitado do lado de fora ininterruptamente (o Vigia), que jamais pode entrar no tanque sob nenhuma hipótese. Caso haja um desmaio, o resgate deve ser executado exclusivamente através de tripés de acesso, guinchos e sistema de polias pela equipe de emergência."
     ],
     imageUrl: getImg(8960942),
+    possuiTreinamentoObrigatorio: true,
+    treinamentos: [
+      {
+        funcao: "Trabalhador Autorizado",
+        nome: "Trabalhador Autorizado em Espaço Confinado",
+        cargaInicial: "16h",
+        cargaPeriodica: "8h",
+        periodicidade: "Anual"
+      },
+      {
+        funcao: "Vigia",
+        nome: "Vigia de Espaço Confinado",
+        cargaInicial: "16h",
+        cargaPeriodica: "8h",
+        periodicidade: "Anual"
+      },
+      {
+        funcao: "Supervisor de Entrada",
+        nome: "Supervisor de Entrada em Espaço Confinado",
+        cargaInicial: "40h",
+        cargaPeriodica: "8h",
+        periodicidade: "Anual"
+      },
+      {
+        funcao: "Equipe de Emergência e Salvamento",
+        nome: "Equipe de Emergência e Salvamento",
+        cargaInicial: "24h ou 32h, conforme nível do resgatista",
+        periodicidade: "Conforme plano de emergência e NR-33"
+      }
+    ],
     servicePitch: "Mapeamos e sinalizamos todos os espaços confinados da empresa, elaboramos os procedimentos de resgate e capacitamos sua equipe (Vigias, Trabalhadores Autorizados e Supervisores de Entrada)."
   },
   {
@@ -441,6 +621,8 @@ export const nrsDatabase: NRDetails[] = [
       "Além da obrigatoriedade do monitoramento atmosférico contínuo e das permissões de trabalho (PT), estaleiros com mais de mil funcionários necessitam de viatura de emergência (ambulância) fixa e dedicada integralmente dentro das instalações."
     ],
     imageUrl: getImg(19544248),
+    cargaHoraria: "20h (Trabalho a Quente)",
+    periodicidade: "Anual (1 ano)",
   },
   {
     id: "nr-35",
@@ -450,10 +632,22 @@ export const nrsDatabase: NRDetails[] = [
     shortDescription: "Estabelece os requisitos mínimos e as medidas de proteção para o trabalho em altura.",
     detailedContent: [
       "A NR 35 rege as normas para toda e qualquer atividade executada acima de 2,0 metros do nível inferior (chão, laje ou plataforma) e que apresente risco de queda. Esta norma é central na prevenção do tipo de acidente que mais causa mortes na construção e manutenção predial/industrial.",
-      "Qualquer tarefa neste escopo necessita de Análise de Risco prévia e Permissão de Trabalho (PT). O uso de cinturões de segurança tipo paraquedista dotados de talabartes duplos com absorvedores de energia é inegociável, e o equipamento deve sempre estar conectado a pontos de ancoragem (linhas de vida) com capacidade de carga atestada por engenheiro mecânico.",
-      "Os trabalhadores designados para essas tarefas precisam estar com a saúde validada (exames que constatem ausência de labirintite, problemas cardíacos ou neurológicos, marcados expressamente no ASO) e portar o certificado do treinamento teórico e prático (validade bianual)."
+      "Todo trabalho em altura deve ser precedido de Análise de Risco. Os trabalhos não rotineiros devem ser previamente autorizados por Permissão de Trabalho, conforme os requisitos da NR-35. O Sistema de Proteção Individual contra Quedas (SPIQ) deve ser selecionado conforme a Análise de Risco, tarefa, fator de queda e sistema de ancoragem, e o equipamento deve sempre estar conectado a pontos de ancoragem (linhas de vida) com capacidade de carga atestada por profissional legalmente habilitado.",
+      "A aptidão clínica deve ser avaliada conforme a NR-07, considerando condições de saúde que possam causar mal súbito ou queda e os fatores psicossociais pertinentes, sendo a aptidão consignada no ASO. O trabalhador deve portar o certificado do treinamento teórico e prático (validade bianual)."
     ],
     imageUrl: getImg(8961260),
+    possuiTreinamentoObrigatorio: true,
+    treinamentos: [
+      {
+        nome: "Trabalho em Altura",
+        publico: "Trabalhador autorizado",
+        cargaInicial: "8h",
+        cargaPeriodica: "8h",
+        periodicidade: "2 anos",
+        modalidade: "Presencial (conforme Portaria MTE nº 1.259/2026)",
+        observacao: "Treinamento eventual também deve ser realizado nas situações previstas na NR-01 e NR-35."
+      }
+    ],
     servicePitch: "Elaboramos Análises de Risco específicas para trabalhos em altura, definimos e testamos pontos de ancoragem e ministramos o treinamento obrigatório focado na realidade da sua estrutura."
   },
   {
@@ -468,6 +662,8 @@ export const nrsDatabase: NRDetails[] = [
       "A legislação também dita de forma rigorosa as pausas de recuperação térmica e muscular: dependendo da função, o trabalhador que atua em ambientes artificialmente frios pode precisar de 20 minutos de pausa a cada 1 hora e 40 minutos de operação contínua."
     ],
     imageUrl: getImg(19544248),
+    cargaHoraria: "4h a 16h",
+    periodicidade: "Admissional / Anual",
   },
   {
     id: "nr-37",
@@ -481,6 +677,8 @@ export const nrsDatabase: NRDetails[] = [
       "Nenhum profissional pode atuar ou sequer embarcar nessas estruturas (geralmente através de operações por helicóptero) sem concluir as capacitações teóricas e práticas de sobrevivência no mar, combate a incêndios (curso CBSP) e as avaliações de aptidão física e psicológica estipuladas pela Agência Nacional do Petróleo e pela Marinha do Brasil."
     ],
     imageUrl: getImg(8961146),
+    cargaHoraria: "6h a 40h",
+    periodicidade: "Bienal (2 anos)",
   },
   {
     id: "nr-38",
@@ -494,5 +692,7 @@ export const nrsDatabase: NRDetails[] = [
       "A NR 38 também é incisiva quanto ao fornecimento de luvas com certificação anticorte para proteger as mãos contra vidros quebrados e agulhas escondidas nos sacos de lixo (uma das maiores fontes de acidentes da categoria), bem como regras sobre pontos de apoio durante as longas rotas das ruas, permitindo aos funcionários o acesso a hidratação, banheiros e locais de pausa abrigados do sol e da chuva."
     ],
     imageUrl: getImg(8960942),
+    cargaHoraria: "4h a 8h",
+    periodicidade: "Anual (1 ano)",
   }
 ];

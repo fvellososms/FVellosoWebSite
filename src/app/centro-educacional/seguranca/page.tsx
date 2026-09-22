@@ -99,7 +99,7 @@ const produtos = [
 export default function SegurancaDoTrabalhoPage() {
   return (
     <>
-      <section className="relative overflow-hidden bg-navy-deep py-8 lg:py-10 text-white max-h-[450px]">
+      <section className="relative flex min-h-[50vh] items-center overflow-hidden bg-navy-deep py-12 lg:py-16 text-white">
         <div className="grid-pattern absolute inset-0 opacity-30" />
         <div className="container-fv relative">
           <Reveal className="mx-auto max-w-3xl text-center">

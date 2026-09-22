@@ -97,7 +97,7 @@ export default async function SobrePage() {
   return (
     <>
     {/* Hero Institucional Sobre a FVelloso */}
-      <section className="relative flex h-[450px] items-center overflow-hidden bg-navy-deep text-white">
+      <section className="relative flex min-h-[50vh] items-center overflow-hidden bg-navy-deep py-12 lg:py-16 text-white">
         <div className="grid-pattern absolute inset-0 opacity-30" />
         <div className="container-fv relative w-full">
           <Reveal className="mx-auto max-w-3xl text-center">

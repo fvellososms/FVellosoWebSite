@@ -53,19 +53,16 @@ export default async function OrcamentoPage({
 
   return (
     <>
-      <section className="relative overflow-hidden bg-navy-deep py-8 lg:py-10 text-white max-h-[450px]">
+      <section className="relative flex min-h-[50vh] items-center overflow-hidden bg-navy-deep py-12 lg:py-16 text-white">
         <div className="grid-pattern absolute inset-0 opacity-50" />
         <div className="absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-brand-500/25 blur-3xl" />
-        <div className="container-fv relative max-w-3xl w-full">
-          <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-brand-200">
-              <ShieldIcon className="h-4 w-4" />
-              Orçamento sem compromisso
-            </span>
-            <h1 className="mt-4 font-[family-name:var(--font-display)] text-3xl font-extrabold leading-tight text-white text-balance sm:text-4xl lg:text-5xl">
+        <div className="container-fv relative w-full">
+          <Reveal className="mx-auto max-w-3xl text-center">
+            <span className="eyebrow text-brand-300">Orçamento sem compromisso</span>
+            <h1 className="mt-3 text-3xl font-extrabold leading-tight text-white sm:text-4xl lg:text-5xl">
               Solicite sua proposta técnica
             </h1>
-            <p className="mt-3 text-base leading-relaxed text-white/80 sm:text-lg">
+            <p className="mt-4 text-base sm:text-lg leading-relaxed text-white/80">
               Preencha os dados abaixo e receba um orçamento personalizado para
               consultoria, treinamentos NR, PGR/PCMSO ou fiscalização SMS.
             </p>
