@@ -45,6 +45,7 @@ export default function Header({ contact }: { contact: ContactInfo }) {
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
   useEffect(() => {
     let lastY = window.scrollY;
@@ -61,6 +62,7 @@ export default function Header({ contact }: { contact: ContactInfo }) {
 
   useEffect(() => {
     setOpen(false);
+    setOpenSubmenu(null);
   }, [pathname]);
 
   useEffect(() => {
@@ -194,21 +196,46 @@ export default function Header({ contact }: { contact: ContactInfo }) {
         }`}
       >
         <nav className="container-fv flex flex-col gap-1 py-4" aria-label="Menu mobile">
-          {navItems.map((item) => (
+          {navItems.map((item) => {
+            const isSubmenuOpen = openSubmenu === item.label;
+            return (
             <div key={item.href} className="flex flex-col">
               <Link
                 href={item.href}
-                onClick={item.anchor ? handleContact : () => setOpen(false)}
-                className={`rounded-xl px-4 py-3 text-base font-semibold transition ${
+                onClick={(e) => {
+                  if (item.dropdown) {
+                    e.preventDefault();
+                    setOpenSubmenu(isSubmenuOpen ? null : item.label);
+                  } else if (item.anchor) {
+                    handleContact(e as any);
+                  } else {
+                    setOpen(false);
+                  }
+                }}
+                className={`flex items-center justify-between rounded-xl px-4 py-3 text-base font-semibold transition ${
                   isActive(item) || (item.dropdown && pathname.startsWith(item.href))
                     ? "bg-brand-50 text-brand-700"
                     : "text-navy hover:bg-brand-50"
                 }`}
               >
                 {item.label}
+                {item.dropdown && (
+                  <svg
+                    className={`h-4 w-4 transition-transform ${isSubmenuOpen ? "rotate-180" : ""}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                )}
               </Link>
               {item.dropdown && (
-                <div className="flex flex-col ml-4 mt-1 mb-2 border-l-2 border-brand-100 pl-2">
+                <div
+                  className={`flex flex-col overflow-hidden transition-[max-height,opacity] duration-300 ${
+                    isSubmenuOpen ? "max-h-[300px] opacity-100 mt-1 mb-2 ml-4 border-l-2 border-brand-100 pl-2" : "max-h-0 opacity-0"
+                  }`}
+                >
                   {item.dropdown.map((drop) => (
                     <Link
                       key={drop.href}
@@ -222,7 +249,8 @@ export default function Header({ contact }: { contact: ContactInfo }) {
                 </div>
               )}
             </div>
-          ))}
+            );
+          })}
           <a
             href={whatsappLink(contact)}
             target="_blank"
