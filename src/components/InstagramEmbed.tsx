@@ -89,7 +89,7 @@ export default function InstagramEmbed({ permalink }: Props) {
     <div className="relative flex w-full flex-col items-center justify-center bg-white p-4">
       <iframe
         src={embedUrl}
-        className="w-full max-w-[540px] min-w-[280px] rounded-xl border border-brand-100 shadow-sm transition-opacity"
+        className="w-full max-w-[540px] rounded-xl border border-brand-100 shadow-sm transition-opacity"
         style={{ minHeight: "560px" }}
         frameBorder="0"
         scrolling="no"

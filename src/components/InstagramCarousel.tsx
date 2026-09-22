@@ -20,9 +20,9 @@ export default function InstagramCarousel({ posts }: Props) {
 
   return (
     <div className="card overflow-hidden border border-brand-100/90 bg-white shadow-card relative group">
-      <div className="flex items-center justify-between border-b border-brand-100/70 bg-surface px-5 py-3.5">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b border-brand-100/70 bg-surface px-5 py-3.5 gap-4 sm:gap-0">
         <div className="flex items-center gap-3">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] p-[2px]">
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] p-[2px]">
             <span className="flex h-full w-full items-center justify-center rounded-full bg-white text-xs font-extrabold text-navy">
               FV
             </span>

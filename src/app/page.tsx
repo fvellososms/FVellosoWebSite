@@ -137,7 +137,7 @@ export default async function HomePage() {
 
             {/* Card oficial do Perfil do Instagram */}
             <div className="card overflow-hidden border border-brand-100 bg-white p-6 shadow-soft">
-              <div className="flex items-center justify-between gap-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-3.5">
                   <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] p-0.5">
                     <span className="flex h-full w-full items-center justify-center rounded-full bg-white font-[family-name:var(--font-display)] text-lg font-extrabold text-navy">
@@ -149,7 +149,7 @@ export default async function HomePage() {
                       href="https://www.instagram.com/fvelloso.sms/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 font-bold text-navy hover:text-brand-600"
+                      className="flex flex-wrap items-center gap-1.5 font-bold text-navy hover:text-brand-600"
                     >
                       @fvelloso.sms
                       <span className="inline-block rounded-full bg-brand-50 px-2 py-0.5 text-[0.65rem] font-bold uppercase tracking-wider text-brand-600">
