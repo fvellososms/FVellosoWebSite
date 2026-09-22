@@ -115,7 +115,7 @@ export default async function NRDetailPage({ params }: Props) {
                   </div>
                 )}
 
-                <div className="mt-12 pt-8 border-t border-brand-100">
+                <div className="mt-12 pt-8 border-t border-brand-100 hidden lg:block">
                   <Link href="/nrs" className="btn btn-outline text-sm">
                     Voltar para lista de NRs
                   </Link>
@@ -160,6 +160,11 @@ export default async function NRDetailPage({ params }: Props) {
               </div>
             )}
             
+            <div className="lg:hidden w-full border-t border-brand-100 pt-8 mt-2">
+              <Link href="/nrs" className="btn btn-outline w-full justify-center text-sm">
+                Voltar para lista de NRs
+              </Link>
+            </div>
           </div>
         </div>
       </section>
