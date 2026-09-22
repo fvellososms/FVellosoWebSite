@@ -5,6 +5,7 @@ import InstagramEmbed from "@/components/InstagramEmbed";
 import InstagramCarousel from "@/components/InstagramCarousel";
 import Reveal from "@/components/Reveal";
 import StatsBand from "@/components/StatsBand";
+import logoFvelloso from "@/assets/images/FVelloso Vertical Branco.png";
 import {
   ArrowRightIcon,
   CheckIcon,
@@ -140,9 +141,13 @@ export default async function HomePage() {
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-3.5">
                   <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] p-0.5">
-                    <span className="flex h-full w-full items-center justify-center rounded-full bg-white font-[family-name:var(--font-display)] text-lg font-extrabold text-navy">
-                      FV
-                    </span>
+                    <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-navy">
+                      <Image
+                        src={logoFvelloso}
+                        alt="Logo FVelloso"
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
                   </div>
                   <div>
                     <a
