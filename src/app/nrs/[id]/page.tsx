@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRightIcon, ShieldIcon } from "@/components/icons"; // Ajuste os ícones conforme seu projeto
+import { ArrowRightIcon, ShieldIcon, ClockIcon, HourglassIcon } from "@/components/icons";
 import { nrsDatabase, nrsWithServices } from "@/lib/nrs";
 import Reveal from "@/components/Reveal";
 
@@ -28,7 +28,7 @@ export default async function NRDetailPage({ params }: Props) {
   return (
     <main className="bg-surface min-h-screen">
       {/* HERO SECTION - Imagem de fundo com título */}
-      <section className="relative max-h-[450px] w-full overflow-hidden bg-navy-deep py-12 sm:py-16">
+      <section className="relative flex min-h-[50vh] items-center w-full overflow-hidden bg-navy-deep py-12 sm:py-16 text-white">
         <Image
           src={nr.imageUrl}
           alt={`Ilustração para ${nr.title}`}
@@ -46,6 +46,26 @@ export default async function NRDetailPage({ params }: Props) {
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight max-w-4xl">
               NR {nr.number} — {nr.title}
             </h1>
+            <div className="flex flex-wrap items-center gap-3 mt-5">
+
+              {nr.ultimaAtualizacao && (
+                <div className="inline-flex items-center gap-2 rounded-lg bg-white/10 backdrop-blur-md px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-white border border-white/20">
+                  <span>Atualizada em {nr.ultimaAtualizacao}</span>
+                </div>
+              )}
+              {nr.cargaHoraria && (
+                <div className="inline-flex items-center gap-2 rounded-lg bg-white/10 backdrop-blur-md px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-white border border-white/20">
+                  <ClockIcon className="h-4 w-4 text-brand-300" />
+                  <span>Carga Horária: {nr.cargaHoraria}</span>
+                </div>
+              )}
+              {nr.periodicidade && (
+                <div className="inline-flex items-center gap-2 rounded-lg bg-white/10 backdrop-blur-md px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-white border border-white/20">
+                  <HourglassIcon className="h-4 w-4 text-brand-300" />
+                  <span>Periodicidade: {nr.periodicidade}</span>
+                </div>
+              )}
+            </div>
           </Reveal>
         </div>
       </section>
@@ -68,6 +88,32 @@ export default async function NRDetailPage({ params }: Props) {
                     <p key={idx}>{paragraph}</p>
                   ))}
                 </div>
+
+                {nr.treinamentos && nr.treinamentos.length > 0 && (
+                  <div className="mt-12">
+                    <h3 className="text-xl font-bold text-navy mb-5">Capacitações Relacionadas</h3>
+                    <div className="grid gap-4">
+                      {nr.treinamentos.map((treinamento, idx) => (
+                        <div key={idx} className="bg-white border border-brand-100 rounded-xl p-5 shadow-sm">
+                          <h4 className="font-bold text-brand-600 mb-2">{treinamento.nome}</h4>
+                          <div className="grid sm:grid-cols-2 gap-y-2 text-sm text-ink-strong">
+                            {treinamento.publico && <p><strong>Público:</strong> {treinamento.publico}</p>}
+                            {treinamento.funcao && <p><strong>Função:</strong> {treinamento.funcao}</p>}
+                            {treinamento.cargaInicial && <p><strong>Carga Inicial:</strong> {treinamento.cargaInicial}</p>}
+                            {treinamento.cargaPeriodica && <p><strong>Carga Periódica:</strong> {treinamento.cargaPeriodica}</p>}
+                            {treinamento.periodicidade && <p><strong>Periodicidade:</strong> {treinamento.periodicidade}</p>}
+                            {treinamento.modalidade && <p><strong>Modalidade:</strong> {treinamento.modalidade}</p>}
+                          </div>
+                          {treinamento.observacao && (
+                            <p className="mt-3 text-xs text-ink bg-brand-50 p-2 rounded-md border border-brand-100/50">
+                              <em>Observação:</em> {treinamento.observacao}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <div className="mt-12 pt-8 border-t border-brand-100">
                   <Link href="/nrs" className="btn btn-outline text-sm">
