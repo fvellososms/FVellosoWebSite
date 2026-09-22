@@ -251,15 +251,6 @@ export default function Header({ contact }: { contact: ContactInfo }) {
             </div>
             );
           })}
-          <a
-            href={whatsappLink(contact)}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-outline mt-2 w-full"
-          >
-            <WhatsAppIcon className="h-4 w-4" />
-            WhatsApp {contact.whatsapp}
-          </a>
         </nav>
       </div>
     </header>
