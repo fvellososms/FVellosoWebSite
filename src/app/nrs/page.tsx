@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { ArrowRightIcon, ShieldIcon, SearchCheckIcon } from "@/components/icons";
+import { ArrowRightIcon, ShieldIcon, SearchCheckIcon, ClockIcon, HourglassIcon } from "@/components/icons";
 import Reveal from "@/components/Reveal";
 
 import { nrsDatabase as NRs } from "@/lib/nrs";
@@ -32,7 +32,7 @@ export default function NrsPage() {
 
   return (
     <>
-      <section className="relative overflow-hidden bg-navy-deep py-8 lg:py-10 text-white max-h-[450px]">
+      <section className="relative flex min-h-[50vh] items-center overflow-hidden bg-navy-deep py-12 lg:py-16 text-white">
         <div className="grid-pattern absolute inset-0 opacity-30" />
         <div className="container-fv relative w-full">
           <Reveal className="mx-auto max-w-3xl text-center">
@@ -100,10 +100,31 @@ export default function NrsPage() {
                   <h3 className="text-lg font-bold leading-tight mb-3 group-hover:text-brand-600 transition-colors">
                     {nr.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-ink mb-6 flex-grow">
+                  <p className="text-sm leading-relaxed text-ink mb-4 flex-grow">
                     {nr.shortDescription}
                   </p>
-                  <span className="inline-flex items-center gap-2 text-sm font-bold text-brand-600 group-hover:gap-3 transition-all">
+                  <div className="flex flex-wrap items-center gap-2 py-2.5 border-t border-brand-50 my-2 text-xs text-navy">
+                    {nr.cargaHoraria ? (
+                      <span className="inline-flex items-center gap-1.5 bg-brand-50/80 px-2.5 py-1 rounded-md text-navy font-semibold" title="Carga Horária">
+                        <ClockIcon className="h-3.5 w-3.5 text-brand-600 shrink-0" />
+                        {nr.cargaHoraria}
+                      </span>
+                    ) : (
+                      nr.treinamentos && nr.treinamentos.length > 0 && (
+                        <span className="inline-flex items-center gap-1.5 bg-brand-50/80 px-2.5 py-1 rounded-md text-navy font-semibold" title="Treinamentos">
+                          <ClockIcon className="h-3.5 w-3.5 text-brand-600 shrink-0" />
+                          Múltiplas Capacitações
+                        </span>
+                      )
+                    )}
+                    {nr.periodicidade && (
+                      <span className="inline-flex items-center gap-1.5 bg-brand-50/80 px-2.5 py-1 rounded-md text-navy font-semibold" title="Periodicidade">
+                        <HourglassIcon className="h-3.5 w-3.5 text-brand-600 shrink-0" />
+                        {nr.periodicidade}
+                      </span>
+                    )}
+                  </div>
+                  <span className="inline-flex items-center gap-2 text-sm font-bold text-brand-600 group-hover:gap-3 transition-all mt-1">
                     Ver Detalhes da Norma
                     <ArrowRightIcon className="h-4 w-4" />
                   </span>
