@@ -1,9 +1,6 @@
 import { getSiteContent } from "@/lib/content";
-import Image from "next/image";
 import Reveal from "@/components/Reveal";
-import { CheckIcon, ShieldIcon, serviceIcons } from "@/components/icons";
-import Link from "next/link";
-import { ArrowRightIcon } from "@/components/icons";
+import ServicesExplorer from "@/components/ServicesExplorer";
 
 export const metadata = {
   title: "Serviços | FVelloso",
@@ -16,8 +13,37 @@ export default async function ServicosPage() {
   // Serviços adicionados manualmente conforme solicitado, mantendo a exata estrutura do CMS
   const extraServices = [
     {
+      slug: "rotas-de-fuga",
+      title: "Elaboração de Rotas de Fuga e Sinalização (NR 23)",
+      short: "Projeto de saídas de emergência, rotas de fuga e sinalização conforme NR 23 e Corpo de Bombeiros.",
+      image: "https://images.pexels.com/photos/8961334/pexels-photo-8961334.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=900&h=700",
+      imageAlt: "Planta de rota de fuga e sinalização de emergência em edificação",
+      description: "Planejamento e dimensionamento técnico de rotas de fuga, saídas de emergência e sinalização de segurança contra incêndio e pânico, conforme a NR 23 e instruções técnicas do Corpo de Bombeiros.",
+      bullets: [
+        "Mapeamento e cálculo de fluxo para saídas de emergência",
+        "Elaboração de plantas de rota de fuga e sinalização de abandono",
+        "Especificação de placas fotoluminescentes e iluminação de emergência",
+        "Adequação às normas do Corpo de Bombeiros (AVCB / CLCB)",
+      ],
+    },
+    {
+      slug: "pae",
+      title: "Plano de Atendimento a Emergências (PAE)",
+      short: "Procedimentos para resposta rápida a incêndios, vazamentos, sinistros e acidentes.",
+      image: "https://images.pexels.com/photos/260024/pexels-photo-260024.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=900&h=700",
+      imageAlt: "Equipamentos de combate a incêndio e prontidão para atendimento a emergências",
+      description: "Estruturação de procedimentos técnicos e operacionais para resposta rápida e eficaz a situações de emergência, sinistros, vazamentos ou acidentes em canteiros de obras e indústrias.",
+      bullets: [
+        "Mapeamento de cenários acidentais e hipóteses críticas",
+        "Fluxogramas de acionamento, alarme e comunicação de emergência",
+        "Procedimentos para evacuação de área e primeiros socorros",
+        "Cronograma e diretrizes para simulados práticos de brigada de emergência",
+      ],
+    },
+    {
       slug: "guia-seguranca",
       title: "Guia Completo de Segurança",
+      short: "Documento único com as regras, procedimentos e boas práticas de segurança da sua operação.",
       image: "https://images.pexels.com/photos/30592246/pexels-photo-30592246.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=900&h=700",
       imageAlt: "Guia Completo de Segurança do Trabalho",
       description: "Consultoria e estruturação do Guia Completo de Segurança do Trabalho para a sua empresa, assegurando as melhores práticas operacionais e normativas.",
@@ -30,6 +56,7 @@ export default async function ServicosPage() {
     {
       slug: "solucoes-tecnologicas",
       title: "Soluções Tecnológicas",
+      short: "Checklists digitais, RDO e painéis para acompanhar a segurança em tempo real.",
       image: "https://images.pexels.com/photos/19544248/pexels-photo-19544248.jpeg?auto=compress&cs=tinysrgb&fit=crop&w=900&h=700",
       imageAlt: "Soluções Tecnológicas em SMS",
       description: "Digitalize e otimize a gestão de Segurança do Trabalho da sua empresa com ferramentas modernas para controle em tempo real.",
@@ -45,18 +72,85 @@ export default async function ServicosPage() {
   const serviceOptionMap: Record<string, string> = {
     "consultoria-sms": "Consultoria em SMS",
     "treinamentos-nr": "Treinamentos NR 06 / 08 / 18",
-    "pgr-pcmso": "Elaboração de PGR",
+    "pgr-pcmso": "PGR, PCMSO & LTCAT",
     "fiscalizacao-sms": "Fiscalização SMS em obra",
+    "rotas-de-fuga": "Elaboração de Rotas de Fuga e Sinalização (NR 23)",
+    "pae": "Plano de Atendimento a Emergências (PAE)",
     "guia-seguranca": "Guia Completo de Segurança",
     "solucoes-tecnologicas": "Soluções Tecnológicas",
   };
 
-  // Unindo os serviços do CMS com os novos serviços fixos
-  const allServices = [...services, ...extraServices];
+  // Explicação detalhada exibida no popup "Saiba mais" de cada serviço
+  const serviceDetails: Record<string, { about: string; audience: string }> = {
+    "consultoria-sms": {
+      about:
+        "É o apoio técnico para estruturar o sistema de gestão de Segurança, Meio Ambiente e Saúde da empresa. Levantamos quais NRs e exigências legais se aplicam à sua atividade, comparamos com o que já existe e entregamos um plano de ação priorizado, acompanhando a implantação até a empresa estar pronta para auditorias de clientes e da fiscalização.",
+      audience:
+        "Empresas que precisam organizar ou revisar a gestão de SMS e prestadoras de serviço que precisam atender às exigências de contratantes.",
+    },
+    "fiscalizacao-sms": {
+      about:
+        "É a presença de técnicos em campo verificando se as regras de segurança estão sendo cumpridas na prática: uso de EPIs, andaimes, máquinas, trabalhos em altura e documentação das equipes. Cada inspeção gera um relatório fotográfico com os desvios encontrados e os prazos de correção.",
+      audience:
+        "Obras e frentes de serviço com empreiteiras e subcontratadas, e contratantes que precisam fiscalizar seus terceiros.",
+    },
+    "pgr-pcmso": {
+      about:
+        "O PGR (NR 01) identifica os perigos e avalia os riscos de cada função, com um plano de ação para controlá-los. O PCMSO (NR 07) define os exames médicos de cada trabalhador conforme esses riscos e emite os ASOs. O LTCAT comprova a exposição a agentes nocivos para fins previdenciários, e os laudos de insalubridade e periculosidade (NR 15 e 16) definem o direito aos adicionais.",
+      audience:
+        "Praticamente toda empresa com empregados registrados, já que PGR e PCMSO são obrigatórios (há dispensas específicas para ME e EPP de baixo risco).",
+    },
+    "treinamentos-nr": {
+      about:
+        "São as capacitações exigidas pelas Normas Regulamentadoras para que o trabalhador execute sua atividade com segurança. Os treinamentos têm carga horária e conteúdo definidos pela norma, geram certificado e precisam de reciclagem periódica para continuar válidos.",
+      audience:
+        "Empresas que precisam capacitar novos colaboradores, renovar certificados vencidos ou comprovar treinamentos em auditorias.",
+    },
+    "rotas-de-fuga": {
+      about:
+        "É o projeto que define os caminhos seguros para abandonar a edificação em caso de incêndio ou emergência: dimensionamento das saídas, plantas de rota de fuga, placas fotoluminescentes e iluminação de emergência, conforme a NR 23 e as instruções técnicas do Corpo de Bombeiros.",
+      audience:
+        "Edificações comerciais e industriais, inclusive as que estão em processo de obtenção ou renovação de AVCB / CLCB.",
+    },
+    pae: {
+      about:
+        "É o documento que define o que fazer, quem aciona quem e como agir em emergências como incêndios, vazamentos ou acidentes graves. Reúne os cenários possíveis, os fluxos de comunicação, as rotas de evacuação e o cronograma de simulados com a brigada.",
+      audience:
+        "Indústrias, canteiros de obra e empresas com atividades de risco ou com exigência de PAE por clientes e órgãos ambientais.",
+    },
+    "guia-seguranca": {
+      about:
+        "É um material de referência personalizado que reúne, em um só documento, as regras de segurança, os procedimentos e as boas práticas aplicáveis à operação da sua empresa, para orientar gestores e equipes no dia a dia.",
+      audience:
+        "Empresas que querem padronizar as orientações de segurança e facilitar a integração de novos colaboradores.",
+    },
+    "solucoes-tecnologicas": {
+      about:
+        "São ferramentas digitais para registrar e acompanhar a segurança do trabalho em tempo real: checklists de inspeção no celular, Relatório Diário de Obra (RDO) e painéis com indicadores e pendências.",
+      audience:
+        "Gestores que querem substituir papel e planilhas e acompanhar várias frentes de serviço ao mesmo tempo.",
+    },
+  };
+
+  // Unindo os serviços e ordenando em ordem alfabética pelos títulos dos cards
+  const allServices = [...services, ...extraServices]
+    .sort((a, b) => a.title.localeCompare(b.title, "pt-BR"))
+    .map((service) => ({
+    slug: service.slug,
+    title: service.title,
+    short: service.short,
+    description: service.description,
+    bullets: service.bullets,
+    image: service.image,
+    imageAlt: service.imageAlt,
+    about: serviceDetails[service.slug]?.about ?? service.description,
+    audience: serviceDetails[service.slug]?.audience ?? "",
+    quoteOption: serviceOptionMap[service.slug] ?? service.title,
+  }));
 
   return (
     <>
-      <section className="relative flex min-h-[50vh] items-center overflow-hidden bg-navy-deep py-12 lg:py-16 text-white">
+      <section className="relative overflow-hidden bg-navy-deep py-14 text-white lg:py-20">
         <div className="grid-pattern absolute inset-0 opacity-30" />
         <div className="container-fv relative w-full">
           <Reveal className="mx-auto max-w-3xl text-center">
@@ -73,67 +167,7 @@ export default async function ServicosPage() {
 
       <section className="bg-surface pt-10 pb-20 lg:pt-14 lg:pb-28">
         <div className="container-fv">
-          <div className="grid gap-10 md:grid-cols-2">
-            {allServices.map((service, index) => {
-              // Se não encontrar um ícone específico no objeto serviceIcons, usa o ShieldIcon como fallback (ideal para os novos)
-              const Icon = serviceIcons[service.slug as keyof typeof serviceIcons] ?? ShieldIcon;
-              const targetOption = serviceOptionMap[service.slug] ?? service.title;
-              
-              return (
-                <Reveal
-                  key={service.slug}
-                  delay={index * 50}
-                  as="article"
-                  className="group"
-                >
-                  <div
-                    id={service.slug}
-                    className="card flex h-full scroll-mt-32 flex-col overflow-hidden border border-brand-100 bg-white transition duration-300 hover:shadow-xl"
-                  >
-                    <div className="relative h-64 overflow-hidden">
-                      <Image
-                        src={service.image}
-                        alt={service.imageAlt}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/90 to-transparent" />
-                      <div className="absolute bottom-6 left-6 flex items-center gap-4">
-                        <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-white text-brand-600 shadow-lg">
-                          <Icon className="h-6 w-6" />
-                        </span>
-                        <h2 className="text-2xl font-bold text-white shadow-sm">{service.title}</h2>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-1 flex-col p-8">
-                      <p className="text-base font-semibold leading-relaxed text-navy mb-6">
-                        {service.description}
-                      </p>
-                      <h4 className="text-sm font-bold uppercase tracking-wider text-brand-600 mb-4">Principais Entregas</h4>
-                      <ul className="mb-8 space-y-3">
-                        {service.bullets.map((bullet) => (
-                          <li key={bullet} className="flex gap-3 text-sm text-ink">
-                            <CheckIcon className="mt-0.5 h-5 w-5 shrink-0 text-brand-500" />
-                            {bullet}
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="mt-auto pt-6 border-t border-brand-50">
-                        <Link 
-                          href={`/orcamento?servico=${encodeURIComponent(targetOption)}`} 
-                          className="inline-flex items-center gap-2 text-sm font-bold text-brand-600 hover:text-brand-700 transition"
-                        >
-                          Solicitar orçamento para este serviço
-                          <ArrowRightIcon className="h-4 w-4" />
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
+          <ServicesExplorer services={allServices} />
         </div>
       </section>
     </>

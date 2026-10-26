@@ -1,3 +1,6 @@
+import type { StaticImageData } from "next/image";
+import festajuninaImg from "@/assets/images/equipe/festajuninaFvelloso.jpeg";
+
 export type ContactInfo = {
   phone: string;
   phoneHref: string;
@@ -54,7 +57,7 @@ export type SiteContent = {
     title: string;
     highlight: string;
     subtitle: string;
-    image: string;
+    image: string | StaticImageData;
     imageAlt: string;
     badges: string[];
   };
@@ -63,7 +66,7 @@ export type SiteContent = {
     title: string;
     lead: string;
     paragraphs: string[];
-    image: string;
+    image: string | StaticImageData;
     imageAlt: string;
     pillars: { title: string; text: string }[];
   };
@@ -105,7 +108,7 @@ export const defaultContent: SiteContent = {
       "NR 05 · CIPA",
       "NR 06 · EPI",
       "NR 18 · Construção",
-      "PGR & PCMSO",
+      "PGR, PCMSO & LTCAT",
     ],
   },
   about: {
@@ -117,9 +120,8 @@ export const defaultContent: SiteContent = {
       "Nossa equipe é formada por engenheiros de segurança, técnicos de SST e profissionais de saúde ocupacional com vivência real de campo. Atuamos lado a lado com o cliente, do planejamento da obra à entrega, traduzindo exigências legais em rotinas simples e aplicáveis.",
       "Mais do que documentos, entregamos cultura de segurança: procedimentos claros, equipes treinadas, indicadores acompanhados e evidências organizadas para auditorias, contratantes e fiscalizações.",
     ],
-    image: img(8961146, 1200, 900),
-    imageAlt:
-      "Profissionais de segurança do trabalho revisando projeto no canteiro de obras",
+    image: festajuninaImg,
+    imageAlt: "Equipe FVelloso em confraternização",
     pillars: [
       {
         title: "Atuação em campo",
@@ -153,40 +155,6 @@ export const defaultContent: SiteContent = {
       imageAlt: "Consultores de SMS analisando documentação técnica em obra",
     },
     {
-      slug: "treinamentos-nr",
-      title: "Treinamentos",
-      short:
-        "Capacitação prática e certificada das equipes, com conteúdo aderente à realidade de cada frente de serviço.",
-      description:
-        "Treinamentos presenciais e in company com foco em aplicação prática: uso e conservação de EPI (NR 06), segurança em edificações (NR 08) e condições de segurança na indústria da construção (NR 18), além de integrações e DDS.",
-      bullets: [
-        "NR 06 — seleção, uso, guarda e higienização de EPIs",
-        "NR 08 — edificações, circulação e proteção contra intempéries",
-        "NR 18 — condições e meio ambiente de trabalho na construção",
-        "Integração de novos colaboradores, DDS e reciclagens",
-      ],
-      image: img(35082108, 900, 700),
-      imageAlt:
-        "Turma de trabalhadores com EPIs durante treinamento de segurança do trabalho",
-    },
-    {
-      slug: "pgr-pcmso",
-      title: "PGR & PCMSO",
-      short:
-        "Elaboração, implantação e gestão dos programas obrigatórios de riscos e saúde ocupacional.",
-      description:
-        "Elaboramos o Programa de Gerenciamento de Riscos (inventário de riscos + plano de ação, NR 01) e o PCMSO (NR 07) de forma integrada, com controle de exames, ASOs, prazos e envio dos eventos de SST ao eSocial.",
-      bullets: [
-        "Inventário de riscos e plano de ação (PGR / NR 01)",
-        "PCMSO com coordenação de médico do trabalho",
-        "Controle de exames, ASOs e vencimentos",
-        "Suporte aos eventos de SST no eSocial (S-2210/S-2220/S-2240)",
-      ],
-      image: img(7088834, 900, 700),
-      imageAlt:
-        "Profissional de saúde ocupacional preenchendo ficha médica de trabalhador",
-    },
-    {
       slug: "fiscalizacao-sms",
       title: "Fiscalização SMS",
       short:
@@ -202,6 +170,40 @@ export const defaultContent: SiteContent = {
       image: img(8960991, 900, 700),
       imageAlt:
         "Fiscal de segurança do trabalho com prancheta inspecionando canteiro de obras",
+    },
+    {
+      slug: "pgr-pcmso",
+      title: "PGR, PCMSO & LTCAT",
+      short:
+        "Elaboração, implantação e gestão dos programas obrigatórios de riscos, laudos periciais e saúde ocupacional.",
+      description:
+        "Elaboramos o Programa de Gerenciamento de Riscos (PGR / NR 01), PCMSO (NR 07), LTCAT e Laudos Técnicos de Insalubridade e Periculosidade (NR 15 e 16), com controle de exames, ASOs, plano de riscos e envio dos eventos de SST ao eSocial.",
+      bullets: [
+        "Inventário e Plano de Gerenciamento de Riscos (PGR / NR 01)",
+        "PCMSO com coordenação médica, exames clínicos e ASOs",
+        "Laudos de Insalubridade (NR 15) e Periculosidade (NR 16)",
+        "Elaboração de LTCAT e envio dos eventos de SST ao eSocial (S-2210/S-2220/S-2240)",
+      ],
+      image: img(7088834, 900, 700),
+      imageAlt:
+        "Profissional de saúde ocupacional preenchendo ficha médica de trabalhador",
+    },
+    {
+      slug: "treinamentos-nr",
+      title: "Treinamentos",
+      short:
+        "Capacitação prática e certificada das equipes, com conteúdo aderente à realidade de cada frente de serviço.",
+      description:
+        "Treinamentos presenciais e in company com foco em aplicação prática: uso e conservação de EPI (NR 06), segurança em edificações (NR 08) e condições de segurança na indústria da construção (NR 18), além de integrações e DDS.",
+      bullets: [
+        "NR 06 — seleção, uso, guarda e higienização de EPIs",
+        "NR 12 — segurança no trabalho em máquinas e equipamentos",
+        "NR 18 — condições e meio ambiente de trabalho na construção",
+        "Integração de novos colaboradores, DDS e reciclagens",
+      ],
+      image: img(35082108, 900, 700),
+      imageAlt:
+        "Turma de trabalhadores com EPIs durante treinamento de segurança do trabalho",
     },
   ],
   stats: [
@@ -287,12 +289,13 @@ export const defaultContent: SiteContent = {
 
 export const serviceOptions = [
   "Consultoria em SMS",
-  "Treinamentos NR 06 / 08 / 18",
-  "Elaboração de PGR",
-  "Elaboração de PCMSO",
+  "Elaboração de Rotas de Fuga e Sinalização (NR 23)",
   "Fiscalização SMS em obra",
   "Guia Completo de Segurança",
+  "PGR, PCMSO & LTCAT",
+  "Plano de Atendimento a Emergências (PAE)",
   "Soluções Tecnológicas",
+  "Treinamentos NR 06 / 08 / 18",
   "Outro assunto",
 ];
 

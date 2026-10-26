@@ -224,13 +224,40 @@ export const HourglassIcon = (p: IconProps) => (
   </svg>
 );
 
+export const SignpostIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M12 2v20" />
+    <path d="M18 6H6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h12l3-3-3-3z" />
+  </svg>
+);
+
+export const AlertTriangleIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+    <line x1="12" y1="9" x2="12" y2="13" />
+    <line x1="12" y1="17" x2="12.01" y2="17" />
+  </svg>
+);
+
+export const LeafIcon = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z" />
+    <path d="M2 21c0-3 1.9-5.4 5.2-6.1 2.4-.5 4.9-2 5.8-4.4" />
+  </svg>
+);
+
 export const serviceIcons: Record<
   string,
   (props: IconProps) => React.JSX.Element
 > = {
-  "consultoria-sms": ShieldIcon,
-  "treinamentos-nr": HelmetIcon,
+  // Ícone do pilar SMS (Segurança, Meio Ambiente, Saúde) de cada serviço
+  "consultoria-sms": LeafIcon,
+  "treinamentos-nr": ShieldIcon,
   "pgr-pcmso": HeartPulseIcon,
-  "fiscalizacao-sms": SearchCheckIcon,
+  "fiscalizacao-sms": ShieldIcon,
+  "solucoes-tecnologicas": ShieldIcon,
+  "rotas-de-fuga": LeafIcon,
+  // Exceções com ícone próprio
   "guia-seguranca": BookIcon,
+  "pae": AlertTriangleIcon,
 };

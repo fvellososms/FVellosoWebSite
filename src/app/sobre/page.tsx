@@ -12,6 +12,7 @@ import {
 } from "@/components/icons";
 import ClientsCarousel from "@/components/ClientsCarousel";
 import { getSiteContent } from "@/lib/content";
+import EquipeSection from "@/components/EquipeSection";
 
 export const dynamic = "force-dynamic";
 
@@ -223,6 +224,10 @@ export default async function SobrePage() {
           </Reveal>
         </div>
       </section>
+
+  
+      {/* Nossa Equipe */}
+      <EquipeSection />
 
       {/* CTA final */}
       <section className="bg-white pb-20 lg:pb-28">

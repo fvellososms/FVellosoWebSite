@@ -28,9 +28,13 @@ const navItems: NavItem[] = [
     href: "/servicos",
     dropdown: [
       { label: "Consultoria em SMS", href: "/servicos#consultoria-sms" },
+      { label: "Elaboração de Rotas de Fuga (NR 23)", href: "/servicos#rotas-de-fuga" },
+      { label: "Fiscalização SMS", href: "/servicos#fiscalizacao-sms" },
+      { label: "Guia Completo de Segurança", href: "/servicos#guia-seguranca" },
+      { label: "PGR, PCMSO & LTCAT", href: "/servicos#pgr-pcmso" },
+      { label: "Plano de Atendimento a Emergências (PAE)", href: "/servicos#pae" },
+      { label: "Soluções Tecnológicas", href: "/servicos#solucoes-tecnologicas" },
       { label: "Treinamentos NR", href: "/servicos#treinamentos-nr" },
-      { label: "PGR & PCMSO", href: "/servicos#pgr-pcmso" },
-      { label: "Fiscalização SMS", href: "/servicos#fiscalizacao-sms" }
     ]
   },
   { label: "Centro Educacional", href: "/centro-educacional" },
@@ -155,7 +159,7 @@ export default function Header({ contact }: { contact: ContactInfo }) {
                   )}
                 </Link>
                 {item.dropdown && (
-                  <div className="absolute left-0 top-full mt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
+                  <div className="absolute left-0 top-full mt-2 w-72 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-2 group-hover:translate-y-0 z-50">
                     <div className="py-2 bg-white rounded-xl shadow-[0_10px_40px_-15px_rgba(11,60,107,0.4)] border border-brand-100 flex flex-col">
                       {item.dropdown.map((drop) => (
                         <Link
@@ -192,7 +196,7 @@ export default function Header({ contact }: { contact: ContactInfo }) {
       {/* Menu mobile */}
       <div
         className={`overflow-hidden border-b border-brand-100 bg-white transition-[max-height,opacity] duration-300 md:hidden ${
-          open ? "max-h-[520px] opacity-100" : "max-h-0 opacity-0"
+          open ? "max-h-[700px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <nav className="container-fv flex flex-col gap-1 py-4" aria-label="Menu mobile">
@@ -233,7 +237,7 @@ export default function Header({ contact }: { contact: ContactInfo }) {
               {item.dropdown && (
                 <div
                   className={`flex flex-col overflow-hidden transition-[max-height,opacity] duration-300 ${
-                    isSubmenuOpen ? "max-h-[300px] opacity-100 mt-1 mb-2 ml-4 border-l-2 border-brand-100 pl-2" : "max-h-0 opacity-0"
+                    isSubmenuOpen ? "max-h-[450px] opacity-100 mt-1 mb-2 ml-4 border-l-2 border-brand-100 pl-2" : "max-h-0 opacity-0"
                   }`}
                 >
                   {item.dropdown.map((drop) => (

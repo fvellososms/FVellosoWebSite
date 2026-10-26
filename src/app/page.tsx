@@ -9,17 +9,51 @@ import logoFvelloso from "@/assets/images/FVelloso Vertical Branco.png";
 import {
   ArrowRightIcon,
   CheckIcon,
-  
+  HeartPulseIcon,
+  LeafIcon,
   ShieldIcon,
-  serviceIcons,
 } from "@/components/icons";
 import { getSiteContent } from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
+const smsPillars = [
+  {
+    title: "Segurança",
+    icon: ShieldIcon,
+    text: "Prevenção de acidentes e conformidade com as NRs, do planejamento à fiscalização em campo.",
+    items: [
+      { label: "Fiscalização SMS", slug: "fiscalizacao-sms" },
+      { label: "Treinamentos NR", slug: "treinamentos-nr" },
+      { label: "Guia Completo de Segurança", slug: "guia-seguranca" },
+      { label: "Soluções Tecnológicas", slug: "solucoes-tecnologicas" },
+    ],
+  },
+  {
+    title: "Meio Ambiente e Emergências",
+    icon: LeafIcon,
+    text: "Gestão integrada de SMS e preparação para responder a sinistros, vazamentos e situações de emergência.",
+    items: [
+      { label: "Consultoria em SMS", slug: "consultoria-sms" },
+      { label: "Plano de Atendimento a Emergências", slug: "pae" },
+      { label: "Rotas de Fuga e Sinalização (NR 23)", slug: "rotas-de-fuga" },
+    ],
+  },
+  {
+    title: "Saúde",
+    icon: HeartPulseIcon,
+    text: "Programas de saúde ocupacional, laudos técnicos e envio dos eventos de SST ao eSocial.",
+    items: [
+      { label: "PGR — Gerenciamento de Riscos", slug: "pgr-pcmso" },
+      { label: "PCMSO e ASOs", slug: "pgr-pcmso" },
+      { label: "LTCAT e Laudos de Insalubridade", slug: "pgr-pcmso" },
+    ],
+  },
+];
+
 export default async function HomePage() {
   const content = await getSiteContent();
-  const { hero, about, services, stats, contact, instagramPosts } =
+  const { hero, about, stats, contact, instagramPosts } =
     content;
 
   return (
@@ -207,66 +241,47 @@ export default async function HomePage() {
             </p>
           </Reveal>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-2">
-            {services.map((service, index) => {
-              const Icon = serviceIcons[service.slug] ?? ShieldIcon;
+          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+            {smsPillars.map((pillar, index) => {
+              const Icon = pillar.icon;
               return (
                 <Reveal
-                  key={service.slug}
+                  key={pillar.title}
                   delay={index * 90}
                   as="article"
-                  className="group"
+                  className="card flex h-full flex-col p-7 transition duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-card"
                 >
-                  <div
-                    id={service.slug}
-                    className="card flex h-full scroll-mt-28 flex-col overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-card"
-                  >
-                    <div className="relative h-44 overflow-hidden">
-                      <Image
-                        src={service.image}
-                        alt={service.imageAlt}
-                        width={900}
-                        height={700}
-                        sizes="(max-width: 768px) 100vw, 45vw"
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/75 to-transparent" />
-                      <span className="absolute bottom-4 left-4 flex h-11 w-11 items-center justify-center rounded-xl bg-white/95 text-brand-600 shadow-lg">
-                        <Icon className="h-6 w-6" />
-                      </span>
-                    </div>
-
-                    <div className="flex flex-1 flex-col p-6">
-                      <h3 className="text-xl font-bold">{service.title}</h3>
-                      <p className="mt-2.5 text-sm leading-relaxed">
-                        {service.short}
-                      </p>
-                      <ul className="mt-4 space-y-2">
-                        {service.bullets.slice(0, 3).map((bullet) => (
-                          <li
-                            key={bullet}
-                            className="flex gap-2.5 text-sm text-ink"
-                          >
-                            <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-brand-500" />
-                            {bullet}
-                          </li>
-                        ))}
-                      </ul>
-                      <Link
-                        href={`/orcamento?servico=${encodeURIComponent(
-                          service.title,
-                        )}`}
-                        className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-brand-600 transition hover:gap-2.5 hover:text-brand-700"
-                      >
-                        Solicitar proposta
-                        <ArrowRightIcon className="h-4 w-4" />
-                      </Link>
-                    </div>
-                  </div>
+                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+                    <Icon className="h-6 w-6" />
+                  </span>
+                  <h3 className="mt-5 text-xl font-bold">{pillar.title}</h3>
+                  <p className="mt-2.5 text-sm leading-relaxed">
+                    {pillar.text}
+                  </p>
+                  <ul className="mt-5 flex-1 space-y-1 border-t border-brand-50 pt-4">
+                    {pillar.items.map((item) => (
+                      <li key={item.label}>
+                        <Link
+                          href={`/servicos#${item.slug}`}
+                          className="group flex items-center justify-between gap-3 rounded-lg py-2 text-sm font-semibold text-navy transition hover:text-brand-600"
+                        >
+                          {item.label}
+                          <ArrowRightIcon className="h-4 w-4 shrink-0 text-brand-500 transition group-hover:translate-x-1" />
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                 </Reveal>
               );
             })}
           </div>
+
+          <Reveal className="mt-12 text-center">
+            <Link href="/servicos" className="btn btn-primary">
+              Conheça todas as soluções
+              <ArrowRightIcon className="h-4 w-4" />
+            </Link>
+          </Reveal>
         </div>
       </section>
 

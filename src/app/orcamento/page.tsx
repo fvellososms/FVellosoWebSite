@@ -179,25 +179,6 @@ export default async function OrcamentoPage({
                 ))}
               </ol>
             </div>
-
-            <div className="rounded-2xl bg-navy p-7 text-white">
-              <h2 className="text-lg font-bold text-white">
-                Atendemos em todo o Brasil
-              </h2>
-              <ul className="mt-4 space-y-2.5 text-sm text-white/80">
-                {[
-                  "Construtoras e empreiteiras",
-                  "Indústrias e plantas fabris",
-                  "Órgãos públicos e gestores de obra",
-                  "Condomínios e facilities",
-                ].map((item) => (
-                  <li key={item} className="flex gap-2.5">
-                    <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-brand-300" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
           </Reveal>
         </div>
       </section>

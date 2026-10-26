@@ -12,11 +12,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.fvelloso.com.br"),
   title: {
     default:
-      "FVelloso Consultoria em SMS | Segurança do Trabalho, PGR, PCMSO e Treinamentos NR",
-    template: "%s | FVelloso Consultoria em SMS",
+      "FVelloso SMS",
+    template: "FVelloso SMS | %s",
   },
   description:
-    "Há mais de 25 anos entregando consultoria em SMS, treinamentos NR 06, NR 08 e NR 18, elaboração de PGR e PCMSO e fiscalização de segurança em canteiros de obra e indústrias.",
+    "Há mais de 25 anos entregando consultoria em SMS, treinamentos NR 06, NR 12 e NR 18, elaboração de PGR e PCMSO e fiscalização de segurança em canteiros de obra e indústrias.",
   keywords: [
     "consultoria SMS",
     "segurança do trabalho",
@@ -33,14 +33,24 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "pt_BR",
-    siteName: "FVelloso Consultoria em SMS",
-    title: "FVelloso Consultoria em SMS | 25+ anos em Segurança do Trabalho",
+    siteName: "FVelloso SMS",
+    title: "FVelloso Consultoria em SMS",
     description:
       "Consultoria, treinamentos normativos, PGR/PCMSO e fiscalização SMS para construtoras e indústrias.",
+    images: [
+      {
+        url: "assets/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "FVelloso Consultoria em SMS",
+      },
+      ],
   },
   robots: { index: true, follow: true },
   alternates: { canonical: "/" },
 };
+
+
 
 export const viewport: Viewport = {
   themeColor: "#1565C0",
@@ -48,7 +58,7 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default async function RootLayout({
+export default async function Root({
   children,
 }: {
   children: ReactNode;

@@ -5,16 +5,16 @@ import Link from "next/link";
 import { ArrowRightIcon, ShieldIcon, SearchCheckIcon, ClockIcon, HourglassIcon } from "@/components/icons";
 import Reveal from "@/components/Reveal";
 
-import { nrsDatabase as NRs } from "@/lib/nrs";
+import { nrsDatabase as NRs, nrsWithServices } from "@/lib/nrs";
 
-const categories = ["Todas", "Gestão", "Organização", "Proteção", "Saúde", "Higiene", "Risco Especial"];
+const categories = ["Treinamos", "Todas", "Gestão", "Organização", "Proteção", "Saúde", "Higiene", "Risco Especial"];
 
 const normalizeText = (text: string) => 
   text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
 export default function NrsPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("Todas");
+  const [selectedCategory, setSelectedCategory] = useState("Treinamos");
 
   const filteredNRs = useMemo(() => {
     const normalizedQuery = normalizeText(searchQuery);
@@ -24,7 +24,9 @@ export default function NrsPage() {
         normalizeText(nr.title).includes(normalizedQuery) ||
         normalizeText(nr.shortDescription).includes(normalizedQuery);
       
-      const matchesCategory = selectedCategory === "Todas" || nr.category === selectedCategory;
+      const matchesCategory =
+        selectedCategory === "Todas" ||
+        (selectedCategory === "Treinamos" ? nrsWithServices.includes(nr.number) : nr.category === selectedCategory);
 
       return matchesSearch && matchesCategory;
     });
@@ -152,13 +154,13 @@ export default function NrsPage() {
             <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-brand-600 to-navy p-8 sm:p-16 text-center text-white">
               <div className="grid-pattern absolute inset-0 opacity-20" />
               <div className="relative max-w-3xl mx-auto">
-                <h2 className="text-3xl font-bold sm:text-4xl mb-6">
+                <h2 className="text-3xl font-bold text-white text-balance sm:text-4xl">
                   Dúvidas sobre a aplicação de alguma dessas normas?
                 </h2>
                 <p className="text-lg text-white/80 mb-10 leading-relaxed">
                   Interpretar a lei é fácil, aplicar no canteiro ou na fábrica é o desafio. A FVelloso oferece suporte técnico especializado para a implementação correta de todas as NRs.
                 </p>
-                <div className="flex flex-col sm:flex-row justify-center gap-4">
+                <div className="flex flex-col sm:flex-row justify-center gap-4 ">
                   <Link href="/orcamento" className="btn btn-primary bg-white !text-brand-700 !bg-none">
                     Consultoria para NRs
                     <ArrowRightIcon className="h-4 w-4" />

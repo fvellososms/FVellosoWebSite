@@ -1,0 +1,16 @@
+# FVelloso Consultoria em SMS
+
+Site oficial: https://www.fvelloso.com.br
+
+## Sobre
+A FVelloso atua com consultoria em Segurança,
+Meio Ambiente e Saúde Ocupacional.
+
+## Serviços
+- Consultoria em Segurança do Trabalho
+- Elaboração de PGR
+- Treinamentos normativos
+- Fiscalização SMS
+
+## Páginas
+- https://www.fvelloso.com.br/
